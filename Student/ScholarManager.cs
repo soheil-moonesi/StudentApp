@@ -13,20 +13,14 @@ namespace Uni
         {
             scholarsList.Add(scholar);
         }
-        public void removeScholar(int scholarId)
-        {
-            int temp = 0;
 
-            for (int i = 0; i <  scholarsList.Count; i++)
-            {
-               if( scholarsList[i].GetScholarId() == scholarId)
-                {
-                    scholarsList.RemoveAt(i);
-                    temp = 1;
-                }
-               else if(i ==  scholarsList.Count-1  && temp ==0) { Console.WriteLine("Scholar not exist"); break; }
-            }   
+
+        public void removeScholar()
+        {
+           int i = HandleScholarId();
+            scholarsList.RemoveAt(i);
         }
+
         public void AddClassToScholar(int classId)
         {
             for (int i = 0; i < scholarsList.Count; i++)
@@ -49,23 +43,57 @@ namespace Uni
             }
         }
 
-        public int GetAndConvertScholarId(string prompt)
+     
+        public int HandleScholarId()
         {
-            Console.WriteLine(prompt);
-            int scholarId = 0;
-
-            while (scholarId==0)
+            int i = -1;
+                Console.WriteLine("enter scholar id");
+            while (i == -1)
             {
-               bool successConvert = int.TryParse(Console.ReadLine(), out scholarId);
+                string inputScholarId = Console.ReadLine();
 
-                if (successConvert==false)
+                int scholarId = CheckScolarIdConsole(inputScholarId);
+
+                if (scholarId != 0)
+                {
+                 i = GetScholarIndexAndValidation(scholarId);
+                }
+               
+            }
+            return i;
+        }
+
+
+        public int CheckScolarIdConsole(string scholarIdInput)
+        {
+            int scholarId=0 ;
+            bool successConvert = false;
+         
+                successConvert = int.TryParse(scholarIdInput, out scholarId);
+
+                if (successConvert == false)
                 {
                     Console.WriteLine("Invalid input: type a number.");
                 }
-            }
-     
-
+    
+           
             return scholarId;
+        }
+
+        public int GetScholarIndexAndValidation(int scholarId)
+        {
+            
+            for (int i = 0; i < scholarsList.Count; i++)
+            {
+                if (scholarsList[i].GetScholarId() == scholarId)
+                {
+
+                    return i;
+                }
+
+            }
+            Console.WriteLine("Scholar not exist, enter another ID.");
+            return -1;
         }
 
         public static void ScoresIni(ScholarManager scholarManager)
@@ -83,12 +111,10 @@ namespace Uni
             ScoreAverage(scholarManager);
         }
 
-        public static void ScoresAssign(ScholarManager scholarManager,int scholarId)
+        public  void ScoresAssign(ScholarManager scholarManager)
         {
-   
-            for (int i = 0; i < scholarManager.scholarsList.Count; i++)
-            {
-                if(scholarManager.scholarsList[i].GetScholarId( ) == scholarId)
+            int i = HandleScholarId();
+
                 for (int j = 0; j < scholarManager.scholarsList[i].ClassScholar.Count; j++)
                     {
                         int ScoreInput = 0;
@@ -106,8 +132,7 @@ namespace Uni
                             }
                         }
                         scholarManager.scholarsList[i].ClassScore[j]=ScoreInput;
-                }
-            }
+                }       
         }
 
         public static void ScoreAverage(ScholarManager scholarManager1)
@@ -123,36 +148,20 @@ namespace Uni
                   }
         }
 
-        public static void RatingScholar(ScholarManager scholarManager1)
+        public static void Display(ScholarManager scholarManager1,string bySomething)
         {
-
-            scholarManager1.scholarsList.Sort(new ScholarComparerRate());
-            for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
-            {
-                Console.WriteLine($"{scholarManager1.scholarsList[i].Name} \n {scholarManager1.scholarsList[i].LastName} \n {scholarManager1.scholarsList[i].Average}");
-            }
-            
-        }
-
-        public static void SortScholarName(ScholarManager scholarManager1)
-        {
-
-            scholarManager1.scholarsList.Sort(new ScholarComparerName());
-            for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
-            {
-                Console.WriteLine($"{scholarManager1.scholarsList[i].Name} \n {scholarManager1.scholarsList[i].LastName} \n {scholarManager1.scholarsList[i].ScholarId}");
-            }
-
-        }
-
-        public static void displayScholars(ScholarManager scholarManager1)
-        {
-
-            for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
-            {
-                Console.WriteLine($"{scholarManager1.scholarsList[i].Name} \n {scholarManager1.scholarsList[i].LastName} \n {scholarManager1.scholarsList[i].ScholarId}");
-            }
-
+                    for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
+                    {
+                       if (bySomething == "byName")
+                        {
+                         scholarManager1.scholarsList.Sort(new ScholarComparerName());
+                        }
+                       else if (bySomething=="byScore")
+                {
+                    scholarManager1.scholarsList.Sort(new ScholarComparerRate());
+                }
+                Console.WriteLine($"{scholarManager1.scholarsList[i].Name} \n {scholarManager1.scholarsList[i].LastName} \n {scholarManager1.scholarsList[i].ScholarId}  \n {scholarManager1.scholarsList[i].Average}");
+                    }
         }
 
         public static void MinScoreClass(ScholarManager scholarManager1)
@@ -196,15 +205,10 @@ namespace Uni
             }
             Console.WriteLine($"Min score in class {scholarManager1.scholarsList[saveIndex].ClassScholar[saveIndex]} is {MinTemp}");
         }
-        public static void ChangeScholar(ScholarManager scholarManager, int scholarId)
+        public void ChangeScholar(ScholarManager scholarManager)
         {
-            int temp = 0;
+            int i = HandleScholarId();
 
-            for (int i = 0; i < scholarManager.scholarsList.Count; i++)
-            {
-                if (scholarManager.scholarsList[i].GetScholarId() == scholarId)
-                {
-                    temp = 1;
                     Console.WriteLine("wanna change name type something otherwise just press enter");
                     string tempName = Console.ReadLine();
                     if (tempName != "")
@@ -218,11 +222,28 @@ namespace Uni
                     {
                         scholarManager.scholarsList[i].Name = templastname;
                     }
+
+        }
+        public int GetAndConvertScholarId(string prompt)
+        {
+            Console.WriteLine(prompt);
+            int scholarId = 0;
+            int result = -1;
+            while (result == -1)
+            {
+                bool successConvert = int.TryParse(Console.ReadLine(), out scholarId);
+
+                if (successConvert == false)
+                {
+                    Console.WriteLine("Invalid input: type a number.");
                 }
-                else if(i == scholarManager.scholarsList.Count-1 && temp==0) { Console.WriteLine("scholar not exist");
-                    break;
+                else
+                {
+                    result = GetScholarIndexAndValidation(scholarId);
                 }
             }
+
+            return scholarId;
         }
 
     }

@@ -78,15 +78,8 @@ while ( continueStatus=="y")
             break;
 
         case "3":
-            string removeScholar = "y";
-            while (removeScholar == "y")
-            {
-               
-                tempScholarId = scholarManager.GetAndConvertScholarId("enter scholar id to remove");
-
-                scholarManager.removeScholar(tempScholarId);
-            }
-            break;
+            scholarManager.removeScholar();
+           break;
 
         case "4":
             string removeClass = "y";
@@ -100,35 +93,31 @@ while ( continueStatus=="y")
                     }
             break;
 
-            case "5":
- 
-               int tempScholarId2 = scholarManager.GetAndConvertScholarId("wtite scholar id for change");
-       
-            ScholarManager.ChangeScholar(scholarManager,tempScholarId2);
+            case "5":       
+            scholarManager.ChangeScholar(scholarManager);
             break;
 
         case "7":
             string ScoreAssignStatus = "y";
             while (ScoreAssignStatus == "y")
             {
-                tempScholarId = scholarManager.GetAndConvertScholarId("enter scholar id for score assign ");
-                 ScholarManager.ScoresAssign(scholarManager,tempScholarId);
+                 scholarManager.ScoresAssign(scholarManager);
                 Console.WriteLine(" do you assign score to another scholar? y/n");
                 ScoreAssignStatus = Console.ReadLine();
             }
             break;
 
         case "8":
-            ScholarManager.displayScholars(scholarManager);
+            ScholarManager.Display(scholarManager, "");
             break;
 
         case "9":
-            ScholarManager.SortScholarName(scholarManager);
+            ScholarManager.Display(scholarManager, "byName");
             break;
 
 
         case "10":
-            ScholarManager.RatingScholar(scholarManager);
+            ScholarManager.Display(scholarManager,"byScore");
             break;
 
         case "11":
