@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Uni
 {
-    internal class ScholarManager
+    public class ScholarManager
     {
-        List<Scholar> scholarsList = new List<Scholar>();
+       public List<Scholar> scholarsList = new List<Scholar>();
         public void addScholar(Scholar scholar)
         {
             scholarsList.Add(scholar);
@@ -17,7 +17,7 @@ namespace Uni
 
         public void removeScholar()
         {
-           int i = HandleScholarId();
+            int i = HandleScholarId();
             scholarsList.RemoveAt(i);
         }
 
@@ -25,7 +25,7 @@ namespace Uni
         {
             for (int i = 0; i < scholarsList.Count; i++)
             {
-                    scholarsList[i].ClassScholar.Add(classId);
+                scholarsList[i].ClassScholar.Add(classId);
             }
         }
 
@@ -33,7 +33,7 @@ namespace Uni
         {
             for (int i = 0; i < scholarsList.Count; i++)
             {
-                for (int j = scholarsList[i].ClassScholar.Count - 1 ; j >= 0; j--)
+                for (int j = scholarsList[i].ClassScholar.Count - 1; j >= 0; j--)
                 {
                     if (scholarsList[i].ClassScholar[j] == classId)
                     {
@@ -43,11 +43,11 @@ namespace Uni
             }
         }
 
-     
+
         public int HandleScholarId()
         {
             int i = -1;
-                Console.WriteLine("enter scholar id");
+            Console.WriteLine("enter scholar id");
             while (i == -1)
             {
                 string inputScholarId = Console.ReadLine();
@@ -56,9 +56,9 @@ namespace Uni
 
                 if (scholarId != 0)
                 {
-                 i = GetScholarIndexAndValidation(scholarId);
+                    i = GetScholarIndexAndValidation(scholarId);
                 }
-               
+
             }
             return i;
         }
@@ -66,23 +66,23 @@ namespace Uni
 
         public int CheckScolarIdConsole(string scholarIdInput)
         {
-            int scholarId=0 ;
+            int scholarId = 0;
             bool successConvert = false;
-         
-                successConvert = int.TryParse(scholarIdInput, out scholarId);
 
-                if (successConvert == false)
-                {
-                    Console.WriteLine("Invalid input: type a number.");
-                }
-    
-           
+            successConvert = int.TryParse(scholarIdInput, out scholarId);
+
+            if (successConvert == false)
+            {
+                Console.WriteLine("Invalid input: type a number.");
+            }
+
+
             return scholarId;
         }
 
         public int GetScholarIndexAndValidation(int scholarId)
         {
-            
+
             for (int i = 0; i < scholarsList.Count; i++)
             {
                 if (scholarsList[i].GetScholarId() == scholarId)
@@ -102,66 +102,30 @@ namespace Uni
 
             for (int i = 0; i < scholarManager.scholarsList.Count; i++)
             {
-               for (int j = 0; j < scholarManager.scholarsList[i].ClassScholar.Count; j++)
+                for (int j = 0; j < scholarManager.scholarsList[i].ClassScholar.Count; j++)
                 {
-                    scholarManager.scholarsList[i].ClassScore.Add(random.Next(0,20));
+                    scholarManager.scholarsList[i].ClassScore.Add(random.Next(0, 20));
 
                 }
             }
-            ScoreAverage(scholarManager);
+            //ScoreAverage(scholarManager);
         }
 
-        public  void ScoresAssign(ScholarManager scholarManager)
+
+        public static void Display(ScholarManager scholarManager1, string bySomething)
         {
-            int i = HandleScholarId();
-
-                for (int j = 0; j < scholarManager.scholarsList[i].ClassScholar.Count; j++)
-                    {
-                        int ScoreInput = 0;
-
-
-                      Console.WriteLine($"class id: {scholarManager.scholarsList[i].ClassScholar[j]} score : ");
-
-                        while (ScoreInput == 0)
-                        {
-                            bool check = int.TryParse(Console.ReadLine(), out ScoreInput);
-                            if (check == false)
-                            {
-                                Console.WriteLine("type number");
-
-                            }
-                        }
-                        scholarManager.scholarsList[i].ClassScore[j]=ScoreInput;
-                }       
-        }
-
-        public static void ScoreAverage(ScholarManager scholarManager1)
-        {
-       
-                for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
-                 {
-                    for (int j = 0; j < scholarManager1.scholarsList[i].ClassScholar.Count; j++)
-                    {
-                    scholarManager1.scholarsList[i].Average   += scholarManager1.scholarsList[i].ClassScore[j] ;
-                    }
-                scholarManager1.scholarsList[i].Average /= scholarManager1.scholarsList[i].ClassScore.Count;
-                  }
-        }
-
-        public static void Display(ScholarManager scholarManager1,string bySomething)
-        {
-                    for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
-                    {
-                       if (bySomething == "byName")
-                        {
-                         scholarManager1.scholarsList.Sort(new ScholarComparerName());
-                        }
-                       else if (bySomething=="byScore")
+            for (int i = 0; i < scholarManager1.scholarsList.Count; i++)
+            {
+                if (bySomething == "byName")
+                {
+                    scholarManager1.scholarsList.Sort(new ScholarComparerName());
+                }
+                else if (bySomething == "byScore")
                 {
                     scholarManager1.scholarsList.Sort(new ScholarComparerRate());
                 }
                 Console.WriteLine($"{scholarManager1.scholarsList[i].Name} \n {scholarManager1.scholarsList[i].LastName} \n {scholarManager1.scholarsList[i].ScholarId}  \n {scholarManager1.scholarsList[i].Average}");
-                    }
+            }
         }
 
         public static void MinScoreClass(ScholarManager scholarManager1)
@@ -174,18 +138,16 @@ namespace Uni
 
                 for (int j = 0; j < scholarManager1.scholarsList.Count; j++)
                 {
-
                     listOfScoreForEachClass[i].Add(scholarManager1.scholarsList[j].ClassScore[i]);
-
                 }
             }
-            ScoreAverageClassAndOutMin(scholarManager1,listOfScoreForEachClass);
+            ScoreAverageClassAndOutMin(scholarManager1, listOfScoreForEachClass);
         }
 
         public static void ScoreAverageClassAndOutMin(ScholarManager scholarManager1, List<List<int>> listOfScoreForEachClass)
         {
             List<int> temp = new List<int>();
-            int MinTemp =999;
+            int MinTemp = 999;
             int saveIndex = 0;
             for (int i = 0; i < listOfScoreForEachClass.Count; i++)
             {
@@ -193,10 +155,10 @@ namespace Uni
 
                 for (int j = 0; j < listOfScoreForEachClass[i].Count; j++)
                 {
-                    temp[i] += listOfScoreForEachClass[i][j]; 
+                    temp[i] += listOfScoreForEachClass[i][j];
                 }
-               temp[i] /= listOfScoreForEachClass[i].Count;
-               
+                temp[i] /= listOfScoreForEachClass[i].Count;
+
                 if (temp[i] < MinTemp)
                 {
                     MinTemp = temp[i];
@@ -209,19 +171,19 @@ namespace Uni
         {
             int i = HandleScholarId();
 
-                    Console.WriteLine("wanna change name type something otherwise just press enter");
-                    string tempName = Console.ReadLine();
-                    if (tempName != "")
-                    {
-                        scholarManager.scholarsList[i].Name = tempName;
-                    }
-                    Console.WriteLine("wanna change lastname type something otherwise just press esnter");
+            Console.WriteLine("wanna change name type something otherwise just press enter");
+            string tempName = Console.ReadLine();
+            if (tempName != "")
+            {
+                scholarManager.scholarsList[i].Name = tempName;
+            }
+            Console.WriteLine("wanna change lastname type something otherwise just press esnter");
 
-                    string templastname = Console.ReadLine();
-                    if (templastname != "")
-                    {
-                        scholarManager.scholarsList[i].Name = templastname;
-                    }
+            string templastname = Console.ReadLine();
+            if (templastname != "")
+            {
+                scholarManager.scholarsList[i].Name = templastname;
+            }
 
         }
         public int GetAndConvertScholarId(string prompt)
@@ -244,6 +206,18 @@ namespace Uni
             }
 
             return scholarId;
+        }
+
+
+
+        public delegate void WhichSection(int i, ScholarManager scholarManager1);
+
+        public void PerformOperationOnAllSections(WhichSection whichSection,ScholarManager scholarManager1)
+        {
+            for (int i = 0; i < scholarsList.Count; i++)
+            {
+                whichSection(i, scholarManager1);
+            }
         }
 
     }

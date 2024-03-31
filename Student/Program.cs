@@ -32,6 +32,34 @@ ClassIni(scholarManager,classManager);
 ScholarManager.ScoresIni(scholarManager);
 
 
+ static void ScoreClassSection(int i, ScholarManager scholarManager1)
+{
+    int classScoreCount=   scholarManager1.scholarsList[i].ClassScore.Count;
+    string operation="AVG";
+    for (int j = 0; j < classScoreCount ; j++)
+    {
+        switch (operation)
+        { 
+            case "scoreAssign":
+        string name = scholarManager1.scholarsList[i].Name;
+        Console.WriteLine($"enter scores for {name}");
+        Console.WriteLine(scholarManager1.scholarsList[i].ClassScholar[j]);
+        scholarManager1.scholarsList[i].ClassScore[j] = int.Parse(Console.ReadLine());
+                break;
+            case "AVG":
+                scholarManager1.scholarsList[i].Average += scholarManager1.scholarsList[i].ClassScore[j];
+                if (j == classScoreCount - 1)
+                {
+                    scholarManager1.scholarsList[i].Average /= scholarManager1.scholarsList[i].ClassScore.Count;
+                }
+                break;
+        }
+
+
+    }
+}
+
+
 string continueStatus = "y";
 while ( continueStatus=="y")
 
@@ -98,13 +126,7 @@ while ( continueStatus=="y")
             break;
 
         case "7":
-            string ScoreAssignStatus = "y";
-            while (ScoreAssignStatus == "y")
-            {
-                 scholarManager.ScoresAssign(scholarManager);
-                Console.WriteLine(" do you assign score to another scholar? y/n");
-                ScoreAssignStatus = Console.ReadLine();
-            }
+                scholarManager.PerformOperationOnAllSections(ScoreClassSection, scholarManager);
             break;
 
         case "8":
