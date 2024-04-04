@@ -10,8 +10,8 @@ namespace Uni.Services
     {
         public void removeScholar()
         {
-            int i = HandleScholarId();
-            scholarsList.RemoveAt(i);
+           // int i = HandleScholarId();
+            scholarsList.RemoveAt(0);
         }
     }
 }

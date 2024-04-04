@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Uni
+namespace Uni.Services
 {
     internal class MinimumScoreClasses
     {

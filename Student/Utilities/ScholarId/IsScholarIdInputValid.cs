@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Uni.Utilities.ScholarId
 {
-    internal class IsScholarIdInputValid
+    public class IsScholarIdInputValid
     {
-        public bool CheckScolarIdConsole(string scholarIdInput)
+        public bool isScholarIdInputValid(string scholarIdInput)
         {
             int scholarId = 0;
             bool successConvert = false;
