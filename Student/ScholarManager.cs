@@ -121,7 +121,7 @@ namespace Uni
                 Console.WriteLine($"{scholarManager1.scholarsList[i].Name} \n {scholarManager1.scholarsList[i].LastName} \n {scholarManager1.scholarsList[i].ScholarId}  \n {scholarManager1.scholarsList[i].Average}");
             }
         }
-
+        //todo :del this method
         public static void MinScoreClass(ScholarManager scholarManager1)
         {
             List<List<int>> listOfScoreForEachClass = new List<List<int>>();
@@ -137,7 +137,7 @@ namespace Uni
             }
             ScoreAverageClassAndOutMin(scholarManager1, listOfScoreForEachClass);
         }
-
+        //to do must del this section
         public static void ScoreAverageClassAndOutMin(ScholarManager scholarManager1, List<List<int>> listOfScoreForEachClass)
         {
             List<int> temp = new List<int>();
@@ -159,7 +159,6 @@ namespace Uni
                     saveIndex = i;
                 }
             }
-            Console.WriteLine($"Min score in class {scholarManager1.scholarsList[saveIndex].ClassScholar[saveIndex]} is {MinTemp}");
         }
         public void ChangeScholar(ScholarManager scholarManager)
         {
@@ -203,7 +202,7 @@ namespace Uni
         }
 
 
-
+        //to do must remove delegate and back to normal execution 
         public delegate void WhichSection(int i, ScholarManager scholarManager1,string operation);
 
         public void PerformOperationOnAllSections(WhichSection whichSection,ScholarManager scholarManager1,string operation)

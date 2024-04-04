@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Uni.Models;
 
-namespace Uni
+namespace Uni.Services
 {
     internal class AddScholar : ScholarManager
     {

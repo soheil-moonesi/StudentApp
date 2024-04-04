@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Uni
+namespace Uni.Services
 {
-    internal class RemoveScholar:ScholarManager
+    internal class RemoveScholar : ScholarManager
     {
         public void removeScholar()
         {
