@@ -2,6 +2,7 @@
 
 using System.Xml.Linq;
 using Uni;
+using Uni.Models;
 
 string addScholarStatus = "y";
 int tempScholarId;
@@ -29,13 +30,14 @@ static void ClassIni(ScholarManager scholarManager,ClassManager classManager)
 ClassIni(scholarManager,classManager);
 
 
-ScholarManager.ScoresIni(scholarManager);
+scholarManager.PerformOperationOnAllSections(ScoreClassSection, scholarManager, "scoreIni");
 
 
- static void ScoreClassSection(int i, ScholarManager scholarManager1)
+
+static void ScoreClassSection(int i, ScholarManager scholarManager1,string operation)
 {
-    int classScoreCount=   scholarManager1.scholarsList[i].ClassScore.Count;
-    string operation="AVG";
+    int classScoreCount=   scholarManager1.scholarsList[i].ClassScholar.Count;
+  
     for (int j = 0; j < classScoreCount ; j++)
     {
         switch (operation)
@@ -53,6 +55,17 @@ ScholarManager.ScoresIni(scholarManager);
                     scholarManager1.scholarsList[i].Average /= scholarManager1.scholarsList[i].ClassScore.Count;
                 }
                 break;
+                case "scoreIni":
+                Random random = new Random();
+                scholarManager1.scholarsList[i].ClassScore.Add(random.Next(0, 20));
+                break;
+                case "RemoveClass":
+                int tempClassId = int.Parse(Console.ReadLine());    
+                if(scholarManager1.scholarsList[i].ClassScholar[j] == tempClassId)
+                scholarManager1.scholarsList[i].ClassScholar.RemoveAt(j);
+                break;
+
+
         }
 
 
@@ -113,9 +126,8 @@ while ( continueStatus=="y")
             string removeClass = "y";
             while (removeClass == "y")
             {
-                tempClassId = scholarManager.GetAndConvertScholarId("enter class id for emove all class for all scholars");
-                scholarManager.RemoveClassScholars(tempClassId);
-                classManager.removeClass(tempClassId);
+                scholarManager.PerformOperationOnAllSections(ScoreClassSection, scholarManager, "RemoveClass");
+
                 Console.WriteLine(" do you want to remove more class? y/n");
                 removeClass =Console.ReadLine();
                     }
@@ -126,7 +138,7 @@ while ( continueStatus=="y")
             break;
 
         case "7":
-                scholarManager.PerformOperationOnAllSections(ScoreClassSection, scholarManager);
+                scholarManager.PerformOperationOnAllSections(ScoreClassSection, scholarManager, "scoreAssign");
             break;
 
         case "8":

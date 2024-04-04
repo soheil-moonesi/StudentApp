@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Uni.Models;
 
 namespace Uni
 {
     public class ScholarManager
     {
        public List<Scholar> scholarsList = new List<Scholar>();
-        public void addScholar(Scholar scholar)
-        {
-            scholarsList.Add(scholar);
-        }
 
 
-        public void removeScholar()
-        {
-            int i = HandleScholarId();
-            scholarsList.RemoveAt(i);
-        }
+
+
 
         public void AddClassToScholar(int classId)
         {
@@ -29,19 +23,19 @@ namespace Uni
             }
         }
 
-        public void RemoveClassScholars(int classId)
-        {
-            for (int i = 0; i < scholarsList.Count; i++)
-            {
-                for (int j = scholarsList[i].ClassScholar.Count - 1; j >= 0; j--)
-                {
-                    if (scholarsList[i].ClassScholar[j] == classId)
-                    {
-                        scholarsList[i].ClassScholar.RemoveAt(j);
-                    }
-                }
-            }
-        }
+        //public void RemoveClassScholars(int classId)
+        //{
+        //    for (int i = 0; i < scholarsList.Count; i++)
+        //    {
+        //        for (int j = scholarsList[i].ClassScholar.Count - 1; j >= 0; j--)
+        //        {
+        //            if (scholarsList[i].ClassScholar[j] == classId)
+        //            {
+        //                scholarsList[i].ClassScholar.RemoveAt(j);
+        //            }
+        //        }
+        //    }
+        //}
 
 
         public int HandleScholarId()
@@ -63,7 +57,7 @@ namespace Uni
             return i;
         }
 
-
+   //todo:delete this section
         public int CheckScolarIdConsole(string scholarIdInput)
         {
             int scholarId = 0;
@@ -79,7 +73,7 @@ namespace Uni
 
             return scholarId;
         }
-
+        // to do delete this
         public int GetScholarIndexAndValidation(int scholarId)
         {
 
@@ -96,20 +90,20 @@ namespace Uni
             return -1;
         }
 
-        public static void ScoresIni(ScholarManager scholarManager)
-        {
-            Random random = new Random();
+        //public static void ScoresIni(ScholarManager scholarManager)
+        //{
+        //    Random random = new Random();
 
-            for (int i = 0; i < scholarManager.scholarsList.Count; i++)
-            {
-                for (int j = 0; j < scholarManager.scholarsList[i].ClassScholar.Count; j++)
-                {
-                    scholarManager.scholarsList[i].ClassScore.Add(random.Next(0, 20));
+        //    for (int i = 0; i < scholarManager.scholarsList.Count; i++)
+        //    {
+        //        for (int j = 0; j < scholarManager.scholarsList[i].ClassScholar.Count; j++)
+        //        {
+        //            scholarManager.scholarsList[i].ClassScore.Add(random.Next(0, 20));
 
-                }
-            }
-            //ScoreAverage(scholarManager);
-        }
+        //        }
+        //    }
+        //   ScoreAverage(scholarManager);
+        //}
 
 
         public static void Display(ScholarManager scholarManager1, string bySomething)
@@ -210,13 +204,13 @@ namespace Uni
 
 
 
-        public delegate void WhichSection(int i, ScholarManager scholarManager1);
+        public delegate void WhichSection(int i, ScholarManager scholarManager1,string operation);
 
-        public void PerformOperationOnAllSections(WhichSection whichSection,ScholarManager scholarManager1)
+        public void PerformOperationOnAllSections(WhichSection whichSection,ScholarManager scholarManager1,string operation)
         {
             for (int i = 0; i < scholarsList.Count; i++)
             {
-                whichSection(i, scholarManager1);
+                whichSection(i, scholarManager1, operation);
             }
         }
 

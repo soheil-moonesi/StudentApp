@@ -42,10 +42,7 @@ namespace Uni
                 }
 
             }
-            //if (classId == 0)
-            //{
-            //    GetAndConvertClassId(prompt);
-            //}
+      
             return classId;
         }
         public List<UniClass> GetClasses() { 

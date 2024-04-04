@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Uni
+namespace Uni.Models
 {
     public class Scholar
     {
@@ -23,11 +23,11 @@ namespace Uni
             LastName = lastName;
             ScholarId = scholarId;
         }
- 
+
         public int GetScholarId()
         {
             return ScholarId;
         }
-      
+
     }
 }
